@@ -1,0 +1,9 @@
+{
+    "light_percentage":23,
+    "wind_percentage":12,
+    "regime_value":
+    {
+      "moisture": 76,
+      "temperature": 32.4
+    }
+  }
