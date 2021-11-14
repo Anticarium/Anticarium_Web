@@ -1,40 +1,28 @@
 # To run in console: python -m flask run
 # To run in console, local network: python -m flask run --host=0.0.0.0
 
-import json, models, os
+import models, os
+from helper import buildRegimesList, readJson, saveJson
 from dbActions import DbActions
-from flask import Flask, jsonify, json, request
+from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 database = DbActions('anticarium.db')
 database.connectToDatabase()
 
-# Saves json to passed path of file
-def saveJson(filePath, dct):
-    jsonFile = open(filePath, "w")
-    jsonFile.write(json.dumps(dct))
-
-# Reads json from passed path to file
-def readJson(filePath):
-    jsonFile = open(filePath, "r")
-    jsonData = json.load(jsonFile)
-    jsonFile.close()
-    return jsonData
-
 # Get path to json_files folder
 jsonFilesPath = os.getcwd() + "\json_files"
 
 # Set path variables to json files
-REGIMES_JSON_PATH = jsonFilesPath + "\Regimes.json"
 REGIME_ID_JSON_PATH = jsonFilesPath + "\RegimeId.json"
 CONTROL_JSON_PATH = jsonFilesPath + "\Control.json"
 SENSOR_DATA_JSON_PATH = jsonFilesPath + "\SensorData.json"
 
 # Read json files
-regimesJson = models.toRegimes(readJson(REGIMES_JSON_PATH))
+savedRegimesJson = database.getSavedRegimes()
+regimesJson = models.Regimes(buildRegimesList(savedRegimesJson))
 regimeIdJson = models.toRegimeId(readJson(REGIME_ID_JSON_PATH))
 controlJson = models.toControl(readJson(CONTROL_JSON_PATH))
-savedRegimesJson = database.getSavedRegimes()
 sensorDataJson = models.toSensorData(readJson(SENSOR_DATA_JSON_PATH))
 
 # Header which contents describes what data does request contain
