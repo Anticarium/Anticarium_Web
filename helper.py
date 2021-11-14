@@ -12,6 +12,7 @@ def readJson(filePath):
     jsonFile.close()
     return jsonData
 
+# Creates list of SavedRegimes Regime names
 def buildRegimesList(savedRegimes):    
     regimes = []
     for i in savedRegimes.savedRegimes:

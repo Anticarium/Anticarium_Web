@@ -24,14 +24,15 @@ class DbActions():
 
         return savedRegimes
     
+    # Insert new regime into database
     def saveRegime(self, regime):
         query = f"INSERT INTO REGIMES (ID, NAME, TEMPERATURE, MOISTURE) \
             VALUES ({regime.regimeId.id},'{regime.name}',{regime.regimeValue.temperature},{regime.regimeValue.moisture})"
         self.connection.execute(query)
         self.connection.commit()
 
-    
-    def editRegimeAt(self, regime, id):
+    # Update regime by passed value
+    def editRegimeAt(self, regime, id):        
         query = f"UPDATE REGIMES set  \
             NAME = '{regime.name}', \
             TEMPERATURE = {regime.regimeValue.temperature},    \
@@ -40,6 +41,7 @@ class DbActions():
         self.connection.execute(query)
         self.connection.commit()
 
+    # Delete regime by id
     def deleteRegimeAt(self, id):
         query = f"DELETE from REGIMES where ID = {id}"
         self.connection.execute(query)
