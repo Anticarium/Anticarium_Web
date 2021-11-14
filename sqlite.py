@@ -12,3 +12,4 @@ conn.execute('''CREATE TABLE REGIMES (
          );''')
 
 conn.close()
+

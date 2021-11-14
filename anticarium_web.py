@@ -1,17 +1,14 @@
-# To run in console: python -m flask run
-# To run in console, local network: python -m flask run --host=0.0.0.0
-
 import models, os
 from helper import buildRegimesList, readJson, saveJson
 from dbActions import DbActions
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
-database = DbActions(os.getcwd() + "/anticarium.db")
+database = DbActions("/home/pi/Desktop/Anticarium_Web/Anticarium_Web/anticarium.db")
 database.connectToDatabase()
 
 # Get path to json_files folder
-jsonFilesPath = os.getcwd() + "/json_files"
+jsonFilesPath = "/home/pi/Desktop/Anticarium_Web/Anticarium_Web/json_files"
 
 # Set path variables to json files
 REGIME_ID_JSON_PATH = jsonFilesPath + "/RegimeId.json"
@@ -26,7 +23,7 @@ controlJson = models.toControl(readJson(CONTROL_JSON_PATH))
 sensorDataJson = models.toSensorData(readJson(SENSOR_DATA_JSON_PATH))
 
 # Header which contents describes what data does request contain
-ANTICARIUM_HEADER = 'Anticarium content description'
+ANTICARIUM_HEADER = 'Anticarium_content_description'
 
 @app.route("/")
 def home():
@@ -166,3 +163,6 @@ def returnSavedRegimes():
     returnValue = jsonify(models.fromSavedRegimes(savedRegimesJson))    
     returnValue.headers[ANTICARIUM_HEADER] = "Saved regimes" 
     return returnValue
+
+if __name__ == "__main__":
+	app.run()
