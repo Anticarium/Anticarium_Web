@@ -7,16 +7,16 @@ from dbActions import DbActions
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
-database = DbActions('anticarium.db')
+database = DbActions(os.getcwd() + "/anticarium.db")
 database.connectToDatabase()
 
 # Get path to json_files folder
-jsonFilesPath = os.getcwd() + "\json_files"
+jsonFilesPath = os.getcwd() + "/json_files"
 
 # Set path variables to json files
-REGIME_ID_JSON_PATH = jsonFilesPath + "\RegimeId.json"
-CONTROL_JSON_PATH = jsonFilesPath + "\Control.json"
-SENSOR_DATA_JSON_PATH = jsonFilesPath + "\SensorData.json"
+REGIME_ID_JSON_PATH = jsonFilesPath + "/RegimeId.json"
+CONTROL_JSON_PATH = jsonFilesPath + "/Control.json"
+SENSOR_DATA_JSON_PATH = jsonFilesPath + "/SensorData.json"
 
 # Read json files
 savedRegimesJson = database.getSavedRegimes()
