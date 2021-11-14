@@ -2,8 +2,12 @@
 # To run in console, local network: python -m flask run --host=0.0.0.0
 
 import json, models, os
+from dbActions import DbActions
 from flask import Flask, jsonify, json, request
 app = Flask(__name__)
+
+database = DbActions('anticarium.db')
+database.connectToDatabase()
 
 # Saves json to passed path of file
 def saveJson(filePath, dct):
@@ -18,20 +22,19 @@ def readJson(filePath):
     return jsonData
 
 # Get path to json_files folder
-jsonFilesPath = os.path.realpath(__file__) + "/json_files"
+jsonFilesPath = os.getcwd() + "\json_files"
 
 # Set path variables to json files
-REGIMES_JSON_PATH = jsonFilesPath + "/Regimes.json"
-REGIME_ID_JSON_PATH = jsonFilesPath + "/RegimeId.json"
-CONTROL_JSON_PATH = jsonFilesPath + "/Control.json"
-SAVED_REGIMES_JSON_PATH = jsonFilesPath + "/SavedRegimes.json"
-SENSOR_DATA_JSON_PATH = jsonFilesPath + "/SensorData.json"
+REGIMES_JSON_PATH = jsonFilesPath + "\Regimes.json"
+REGIME_ID_JSON_PATH = jsonFilesPath + "\RegimeId.json"
+CONTROL_JSON_PATH = jsonFilesPath + "\Control.json"
+SENSOR_DATA_JSON_PATH = jsonFilesPath + "\SensorData.json"
 
 # Read json files
 regimesJson = models.toRegimes(readJson(REGIMES_JSON_PATH))
 regimeIdJson = models.toRegimeId(readJson(REGIME_ID_JSON_PATH))
 controlJson = models.toControl(readJson(CONTROL_JSON_PATH))
-savedRegimesJson = models.toSavedRegimes(readJson(SAVED_REGIMES_JSON_PATH))
+savedRegimesJson = database.getSavedRegimes()
 sensorDataJson = models.toSensorData(readJson(SENSOR_DATA_JSON_PATH))
 
 # Header which contents describes what data does request contain
@@ -52,14 +55,20 @@ def saveRegime():
     global controlJson
 
     if index == -1: # New regime
-        regimesJson.regimes.append(requestJson.name)
-        savedRegimesJson.savedRegimes.append(requestJson)
-        regimeIdJson.id = len(savedRegimesJson.savedRegimes) - 1
-        savedRegimesJson.savedRegimes[regimeIdJson.id].regimeId = regimeIdJson
-        controlJson.regimeValue = requestJson.regimeValue
+        newRegime = requestJson
+        newRegime.regimeId.id = len(savedRegimesJson.savedRegimes)
+
+        regimesJson.regimes.append(newRegime.name)
+        savedRegimesJson.savedRegimes.append(newRegime)
+        regimeIdJson.id = newRegime.regimeId.id
+        controlJson.regimeValue = newRegime.regimeValue
+
+        database.saveRegime(newRegime)
     else: # Edit regime
         regimesJson.regimes[index] = requestJson.name
         savedRegimesJson.savedRegimes[index] = requestJson
+        
+        database.editRegimeAt(requestJson, index)
 
     return ('', 204) 
 
@@ -72,6 +81,7 @@ def saveRegimeId():
         regimeId = regimeId - 100
         global savedRegimesJson
         savedRegimesJson.savedRegimes.pop(regimeId)
+        database.deleteRegimeAt(regimeId)
         global regimesJson
         regimesJson.regimes.pop(regimeId)
         if regimeIdJson.id == regimeId: # If deleted current regime, set current id to Custom regime
