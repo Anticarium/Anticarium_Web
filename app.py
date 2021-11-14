@@ -5,6 +5,11 @@ import json, models, os
 from flask import Flask, jsonify, json, request
 app = Flask(__name__)
 
+# Saves json to passed path of file
+def saveJson(filePath, dct):
+    jsonFile = open(filePath, "w")
+    jsonFile.write(json.dumps(dct))
+
 # Reads json from passed path to file
 def readJson(filePath):
     jsonFile = open(filePath, "r")
@@ -15,12 +20,19 @@ def readJson(filePath):
 # Get path to json_files folder
 jsonFilesPath = os.path.realpath(__file__) + "/json_files"
 
+# Set path variables to json files
+REGIMES_JSON_PATH = jsonFilesPath + "/Regimes.json"
+REGIME_ID_JSON_PATH = jsonFilesPath + "/RegimeId.json"
+CONTROL_JSON_PATH = jsonFilesPath + "/Control.json"
+SAVED_REGIMES_JSON_PATH = jsonFilesPath + "/SavedRegimes.json"
+SENSOR_DATA_JSON_PATH = jsonFilesPath + "/SensorData.json"
+
 # Read json files
-regimesJson = models.toRegimes(readJson(jsonFilesPath + "/Regimes.json"))
-regimeIdJson = models.toRegimeId(readJson(jsonFilesPath + "/RegimeId.json"))
-controlJson = models.toControl(readJson(jsonFilesPath + "/Control.json"))
-savedRegimesJson = models.toSavedRegimes(readJson(jsonFilesPath + "/SavedRegimes.json"))
-sensorDataJson = models.toSensorData(readJson(jsonFilesPath + "/SensorData.json"))
+regimesJson = models.toRegimes(readJson(REGIMES_JSON_PATH))
+regimeIdJson = models.toRegimeId(readJson(REGIME_ID_JSON_PATH))
+controlJson = models.toControl(readJson(CONTROL_JSON_PATH))
+savedRegimesJson = models.toSavedRegimes(readJson(SAVED_REGIMES_JSON_PATH))
+sensorDataJson = models.toSensorData(readJson(SENSOR_DATA_JSON_PATH))
 
 # Header which contents describes what data does request contain
 ANTICARIUM_HEADER = 'Anticarium content description'
@@ -69,9 +81,9 @@ def saveRegimeId():
         savedRegimesLength = len(savedRegimesJson.savedRegimes)
         for i in range(regimeId, savedRegimesLength, 1):
             savedRegimesJson.savedRegimes[i].regimeId.id = i
-
     else:
         regimeIdJson.id = regimeId
+        saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
 
     return ('', 204)
 
@@ -79,6 +91,7 @@ def saveRegimeId():
 def saveControlData():
     global controlJson
     controlJson = models.toControl(request.get_json())
+    saveJson(CONTROL_JSON_PATH, models.fromControl(controlJson))
 
     global regimeIdJson
     currentId = regimeIdJson.id
@@ -92,6 +105,7 @@ def saveControlData():
         if not (isSameTemperature and isSameMoisture):
             # Yes: Custom regime
             regimeIdJson.id = -1
+            saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
 
     return ('', 204)
 
