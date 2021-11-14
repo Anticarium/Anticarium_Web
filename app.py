@@ -1,8 +1,7 @@
 # To run in console: python -m flask run
 # To run in console, local network: python -m flask run --host=0.0.0.0
 
-import json
-import models
+import json, models, os
 from flask import Flask, jsonify, json, request
 app = Flask(__name__)
 
@@ -13,14 +12,17 @@ def readJson(filePath):
     jsonFile.close()
     return jsonData
 
+# Get path to json_files folder
+jsonFilesPath = os.path.realpath(__file__) + "/json_files"
 
-regimesJson = models.toRegimes(readJson("./json_files/Regimes.json"))
-regimeIdJson = models.toRegimeId(readJson("./json_files/RegimeId.json"))
-controlJson = models.toControl(readJson("./json_files/Control.json"))
-savedRegimesJson = models.toSavedRegimes(readJson("./json_files/SavedRegimes.json"))
-sensorDataJson = models.toSensorData(readJson("./json_files/SensorData.json"))
+# Read json files
+regimesJson = models.toRegimes(readJson(jsonFilesPath + "/Regimes.json"))
+regimeIdJson = models.toRegimeId(readJson(jsonFilesPath + "/RegimeId.json"))
+controlJson = models.toControl(readJson(jsonFilesPath + "/Control.json"))
+savedRegimesJson = models.toSavedRegimes(readJson(jsonFilesPath + "/SavedRegimes.json"))
+sensorDataJson = models.toSensorData(readJson(jsonFilesPath + "/SensorData.json"))
 
-# Header which describes what data does request contain
+# Header which contents describes what data does request contain
 ANTICARIUM_HEADER = 'Anticarium content description'
 
 @app.route("/")
