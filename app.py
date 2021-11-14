@@ -51,6 +51,7 @@ def saveRegime():
         regimeIdJson.id = newRegime.regimeId.id
         controlJson.regimeValue = newRegime.regimeValue
 
+        saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
         database.saveRegime(newRegime)
     else: # Edit regime
         regimesJson.regimes[index] = requestJson.name
@@ -81,8 +82,8 @@ def saveRegimeId():
             savedRegimesJson.savedRegimes[i].regimeId.id = i
     else:
         regimeIdJson.id = regimeId
-        saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
-
+    
+    saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
     return ('', 204)
 
 @app.route("/send/control", methods=["POST"])

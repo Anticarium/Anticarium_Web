@@ -28,28 +28,30 @@ class DbActions():
         query = f"INSERT INTO REGIMES (ID, NAME, TEMPERATURE, MOISTURE) \
             VALUES ({regime.regimeId.id},'{regime.name}',{regime.regimeValue.temperature},{regime.regimeValue.moisture})"
         self.connection.execute(query)
+        self.connection.commit()
 
     
     def editRegimeAt(self, regime, id):
         query = f"UPDATE REGIMES set  \
-            NAME = '{regime.name}'\
-            TEMPERATURE = {regime.regimeValue.temperature}    \
+            NAME = '{regime.name}', \
+            TEMPERATURE = {regime.regimeValue.temperature},    \
             MOISTURE = {regime.regimeValue.moisture} \
-            where ID = {id} \
-            );"
+            where ID = {id}"
         self.connection.execute(query)
+        self.connection.commit()
 
     def deleteRegimeAt(self, id):
         query = f"DELETE from REGIMES where ID = {id}"
         self.connection.execute(query)
         
         # Get amount of database rows
-        query = f"COUNT(*)"
-        rowCount = self.connection.execute(query)
+        query = f"SELECT COUNT(*) from REGIMES"
+        rowCount = int(self.connection.execute(query).fetchone()[0])
 
         # Update row IDs
-        for i in range(id, rowCount - 1):
+        for i in range(id, rowCount):
             query = f"UPDATE REGIMES set \
                 ID = {i} \
                 where ID = {i + 1}"
             self.connection.execute(query)
+        self.connection.commit()
