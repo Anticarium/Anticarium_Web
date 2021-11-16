@@ -72,6 +72,8 @@ def saveRegimeId():
         regimesJson.regimes.pop(regimeId)
         if regimeIdJson.id == regimeId: # If deleted current regime, set current id to Custom regime
             regimeIdJson.id = -1
+        elif regimeIdJson.id > regimeId: # If deleted regime above regime of current regime id, make current regime smaller by one
+            regimeIdJson.id -= 1
         
         # Update saved regimes indexes
         savedRegimesLength = len(savedRegimesJson.savedRegimes)
@@ -114,14 +116,14 @@ def saveSensorData():
 @app.route("/request/sensor_data")
 def returnSensorData():
     data = jsonify(models.fromSensorData(sensorDataJson))
-    data.headers[ANTICARIUM_HEADER] = "Sensor data" 
+    data.headers[ANTICARIUM_HEADER] = "Sensor_data" 
     return data
 
     
 @app.route("/request/regime_id")
 def returnRegimeId():    
     returnValue = jsonify(models.fromRegimeId(regimeIdJson))
-    returnValue.headers[ANTICARIUM_HEADER] = "Regime id"     
+    returnValue.headers[ANTICARIUM_HEADER] = "Regime_id"     
     return returnValue
 
 @app.route("/request/control")
@@ -153,6 +155,7 @@ def returnRegime():
         # No: Send current regime
         data = jsonify(models.fromRegime(savedRegimesJson.savedRegimes[index]))
         controlJson.regimeValue = savedRegimesJson.savedRegimes[index].regimeValue
+        saveJson(CONTROL_JSON_PATH, models.fromControl(controlJson))
 
     data.headers[ANTICARIUM_HEADER] = "Regime"
     
@@ -161,7 +164,7 @@ def returnRegime():
 @app.route("/request/saved_regimes")
 def returnSavedRegimes():    
     returnValue = jsonify(models.fromSavedRegimes(savedRegimesJson))    
-    returnValue.headers[ANTICARIUM_HEADER] = "Saved regimes" 
+    returnValue.headers[ANTICARIUM_HEADER] = "Saved_regimes" 
     return returnValue
 
 if __name__ == "__main__":
