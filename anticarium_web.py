@@ -70,9 +70,11 @@ def saveRegimeId():
         database.deleteRegimeAt(regimeId)
         global regimesJson
         regimesJson.regimes.pop(regimeId)
-        if regimeIdJson.id == regimeId: # If deleted current regime, set current id to Custom regime
+        if regimeIdJson.id == regimeId:
+            # If deleted current regime, set current id to Custom regime
             regimeIdJson.id = -1
-        elif regimeIdJson.id > regimeId: # If deleted regime above regime of current regime id, make current regime smaller by one
+        elif regimeIdJson.id > regimeId:
+            # If deleted regime above regime of current regime id, make current regime smaller by one
             regimeIdJson.id -= 1
         
         # Update saved regimes indexes
