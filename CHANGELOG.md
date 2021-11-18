@@ -1,4 +1,4 @@
-Anticarium_Web
+# Anticarium_Web
 
 - MODIFY: Flask application now permanently stores data in database file and in json files
 - ADD: `.gitignore` `/json_files*` directory

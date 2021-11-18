@@ -3,7 +3,23 @@
 
 # Setup
 
+**Warning! The steps described below are not tested! There is a need to test these steps on clean Raspbian installation and make adjustments!** 
 
+1. `$ cd ~`
+2. `$ sudo apt update`
+3. `$ sudo apt install apache2`
+4. `$ sudo apt-get install libapache2-mod-wsgi-py3 python-dev`
+5. `$ pip3 install flask`
+6. `$ mkdir ~/Desktop/Anticarium_Web`
+7. Git pull this directory to `~/Desktop/Anticarium_Web`
+8. `$ cd ~/Desktop/Anticarium_Web/Anticarium_Web`
+9. In `anticarium_web.wsgi` put your absolute path to Anticarium_Web local repo
+10. In `anticarium_web.py` put your absolute path to Anticarium_Web local repo where needed
+11. Adjust `anticarium_web.conf.example`, add ip and paths
+12. Rename `anticarium_web.conf.example` to `anticarium_web.conf`
+13. `$ sudo mv ./anticarium_web.conf /etc/apache2/sites-available`
+14. `$ sudo a2ensite /etc/apache2/sites-available/anticarium_web.conf`
+15. `$ sudo service apache2 reload`
 
 # Functionality
 
