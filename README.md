@@ -21,6 +21,10 @@
 14. `$ sudo a2ensite /etc/apache2/sites-available/anticarium_web.conf`
 15. `$ sudo service apache2 reload`
 
+## Useful commands
+
+- `$ sudo service apache2 reload` - reloads apache2 service
+
 # Functionality
 
 This part describes `Anticarium_Web` data requests, response and processing.
