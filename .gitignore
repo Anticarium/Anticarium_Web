@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Anticarium .db file
+anticarium.db
+
+# Folder with json files
+/json_files*
