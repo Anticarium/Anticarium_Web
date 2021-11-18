@@ -15,7 +15,7 @@
 8. `$ cd ~/Desktop/Anticarium_Web/Anticarium_Web`
 9. In `anticarium_web.wsgi` put your absolute path to Anticarium_Web local repo
 10. In `anticarium_web.py` put your absolute path to Anticarium_Web local repo where needed
-11. Adjust `anticarium_web.conf.example`, add ip and paths
+11. Adjust `anticarium_web.conf.example`, by adding ip and paths
 12. Rename `anticarium_web.conf.example` to `anticarium_web.conf`
 13. `$ sudo mv ./anticarium_web.conf /etc/apache2/sites-available`
 14. `$ sudo a2ensite /etc/apache2/sites-available/anticarium_web.conf`
