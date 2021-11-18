@@ -130,3 +130,6 @@ dmypy.json
 
 # Anticarium .db file
 anticarium.db
+
+# Folder with json files
+/json_files*
