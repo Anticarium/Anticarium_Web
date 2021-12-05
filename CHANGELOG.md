@@ -1,5 +1,7 @@
 # Anticarium_Web
 
+- ADD: Apache2 configuration, in 'apache2.conf', to process all requests in single thread
+- ADD: `apache2.conf.example` apache2 configuration example file
 - MODIFY: Flask application now permanently stores data in database file and in json files
 - ADD: `.gitignore` `/json_files*` directory
 - ADD: `.gitignore` `anticarium.db` database file
