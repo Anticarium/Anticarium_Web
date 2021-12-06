@@ -95,7 +95,7 @@ Timeout 300
 # KeepAlive: Whether or not to allow persistent connections (more than
 # one request per connection). Set to "Off" to deactivate.
 #
-KeepAlive On
+KeepAlive Off
 
 #
 # MaxKeepAliveRequests: The maximum number of requests to allow
@@ -231,11 +231,8 @@ IncludeOptional sites-enabled/*.conf
 # Anticarium_Web specific
 
 # Process all requests in single thread
-<IfModule mpm_event_module>
+<IfModule mpm_prefork_module>
     StartServers             1
-    MinSpareThreads          1
-    MaxSpareThreads          1
-    ThreadsPerChild          1
     MaxRequestWorkers        1
     MaxConnectionsPerChild   0
     ServerLimit              1
