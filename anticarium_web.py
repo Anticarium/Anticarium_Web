@@ -4,11 +4,13 @@ from dbActions import DbActions
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 
-database = DbActions("/home/pi/Desktop/Anticarium_Web/Anticarium_Web/anticarium.db")
+ANTICARIUM_WEB_PATH = os.environ["ANTICARIUM_WEB_PATH"]
+
+database = DbActions(f"{ANTICARIUM_WEB_PATH}/anticarium.db")
 database.connectToDatabase()
 
 # Get path to json_files folder
-jsonFilesPath = "/home/pi/Desktop/Anticarium_Web/Anticarium_Web/json_files"
+jsonFilesPath = f"{ANTICARIUM_WEB_PATH}/json_files"
 
 # Set path variables to json files
 REGIME_ID_JSON_PATH = jsonFilesPath + "/RegimeId.json"
