@@ -2,7 +2,7 @@
      # Add machine's IP address (use ifconfig command)
      ServerName ${ANTICARIUM_SERVER_IP}
      # Give an alias to to start your website url with
-     WSGIScriptAlias ${ANTICARIUM_WEB_PATH}/anticarium_web.wsgi
+     WSGIScriptAlias / ${ANTICARIUM_WEB_PATH}/anticarium_web.wsgi
      <Directory ${ANTICARIUM_WEB_PATH}>
                 # set permissions as per apache2.conf file
             Options FollowSymLinks
