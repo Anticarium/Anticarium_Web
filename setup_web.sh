@@ -53,7 +53,7 @@ echo -e "python3-pip successfully installed\n\n"
 #-----------------------------------------------------------------
 echo "Installing flask..."
 pip3 install flask
-sudo chmod -R 755 $HOME/.local
+PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages
 echo -e "flask successfully installed\n\n"
 
 #-----------------------------------------------------------------
