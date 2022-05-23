@@ -20,16 +20,19 @@ fi
 
 echo -e "Setting up Anticarium WEB...\n\n"
 
+#-----------------------------------------------------------------
+echo "Installing apache2..."
+
+sudo apt install -y apache2
+
 EXPORT_COMMAND="export ANTICARIUM_WEB_PATH=$HOME/Anticarium_Web"
 echo $EXPORT_COMMAND >> .profile
 sudo sh -c "echo $EXPORT_COMMAND >> /etc/apache2/envvars"
 
-#-----------------------------------------------------------------
-echo "Installing apache2..."
-sudo apt install -y apache2
 EXPORT_COMMAND="export ANTICARIUM_SERVER_IP=$ANTICARIUM_SERVER_IP"
 echo $EXPORT_COMMAND >> .profile
 sudo sh -c "echo $EXPORT_COMMAND >> /etc/apache2/envvars"
+
 echo -e "apache2 successfully installed\n\n"
 
 #-----------------------------------------------------------------
