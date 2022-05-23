@@ -18,7 +18,11 @@ then
     exit -1
 fi
 
-echo -e "Setting up Anticarium WEB...\n\n"
+#-----------------------------------------------------------------
+echo "Updating apt..."
+sudo apt update
+sudo apt upgrade -y
+echo -e "apt successfully updated\n\n"
 
 #-----------------------------------------------------------------
 echo "Installing apache2..."
