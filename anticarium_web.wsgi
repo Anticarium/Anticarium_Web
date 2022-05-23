@@ -14,7 +14,8 @@ if not os.environ["ANTICARIUM_SERVER_IP"]:
     raise RuntimeError("ANTICARIUM_SERVER_IP environment variable not defined!")
 
 # Otherwise flask module cannot be found. This is not a perfect solution and requires
-# Python virtual environment for mod-wsgi as a real solution
+# Python virtual environment for mod-wsgi as a real solution. Maybe this path to PATH
+# will also work
 sys.path.insert(0, f"/home/pi/.local/lib/python3.9/site-packages")
 
 sys.path.insert(0, f"{ANTICARIUM_WEB_PATH}")

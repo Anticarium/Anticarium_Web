@@ -68,10 +68,6 @@ echo -e "git successfully installed\n\n"
 #-----------------------------------------------------------------
 echo "Cloning Anticarium_Web..."
 git clone https://github.com/Anticarium/Anticarium_Web.git
-cd Anticarium_Web
-git reset --hard origin/use_environment_variables
-git checkout use_environment_variables
-cd $HOME
 echo -e "Anticarium_Web successfully cloned\n\n"
 
 #-----------------------------------------------------------------
