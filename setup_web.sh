@@ -57,6 +57,20 @@ sudo chmod -R 755 $HOME/.local
 echo -e "flask successfully installed\n\n"
 
 #-----------------------------------------------------------------
+echo "Installing git..."
+sudo apt install -y git
+echo -e "git successfully installed\n\n"
+
+#-----------------------------------------------------------------
+echo "Cloning Anticarium_Web..."
+git clone https://github.com/Anticarium/Anticarium_Web.git
+cd Anticarium_Web
+git reset --hard origin/use_environment_variables
+git checkout use_environment_variables
+cd $HOME
+echo -e "Anticarium_Web successfully cloned\n\n"
+
+#-----------------------------------------------------------------
 echo "Configuring apache2..."
 cd $HOME/Anticarium_Web
 set +e
