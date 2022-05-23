@@ -1,10 +1,10 @@
 <VirtualHost *:80>
      # Add machine's IP address (use ifconfig command)
-     ServerName [ip address of the machine]
+     ServerName ${ANTICARIUM_SERVER_IP}
      # Give an alias to to start your website url with
-     WSGIScriptAlias / [absolute path to anticarium_web.wsgi]
-     <Directory [absolute path to Anticarium_Web local repository]>
-                # set permissions as per apache2.conf file
+     WSGIScriptAlias / ${ANTICARIUM_WEB_PATH}/anticarium_web.wsgi
+     <Directory ${ANTICARIUM_WEB_PATH}>
+            # set permissions as per apache2.conf file
             Options FollowSymLinks
             AllowOverride None
             Require all granted
