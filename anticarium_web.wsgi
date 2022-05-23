@@ -15,7 +15,7 @@ if not os.environ["ANTICARIUM_SERVER_IP"]:
 
 # Otherwise flask module cannot be found. This is not a perfect solution and requires
 # Python virtual environment for mod-wsgi as a real solution
-sys.path.insert(0, f"{os.path.expanduser('~')}/.local/lib/python3.9/site-packages")
+sys.path.insert(0, f"/home/pi/.local/lib/python3.9/site-packages")
 
 sys.path.insert(0, f"{ANTICARIUM_WEB_PATH}")
 
