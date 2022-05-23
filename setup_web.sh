@@ -57,7 +57,8 @@ echo -e "python3-pip successfully installed\n\n"
 #-----------------------------------------------------------------
 echo "Installing flask..."
 pip3 install flask
-PYTHONPATH=$PYTHONPATH:$HOME/.local/lib/python3.9/site-packages
+EXPORT_COMMAND="export PYTHONPATH=$HOME/.local/lib/python3.9/site-packages"
+sudo sh -c "echo $EXPORT_COMMAND >> /etc/apache2/envvars"
 echo -e "flask successfully installed\n\n"
 
 #-----------------------------------------------------------------
