@@ -1,6 +1,5 @@
 # Anticarium_Web
 
-- MODIFY: Use environment variables in apache2 files to pass IP and WSGI script path
 - ADD: First time setup script for Raspberry Pi to automatically configure WEB server
 - MODIFY: Python scripts in this repo now use ANTICARIUM_WEB_PATH environment variable to access this repo
 - MODIFY: anticarium_web.example now uses ANTICARIUM_WEB_PATH environment variable to access scripts provided by this repo 
