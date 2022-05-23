@@ -3,25 +3,16 @@
 
 # Setup
 
-**Warning! The steps described below are not tested! There is a need to test these steps on clean Raspbian installation and make adjustments!** 
+For first time setup of Apache2 WEB server you should run `setup_web.sh` script. Note that it sets up all Anticarium WEB related stuff only. If you want to configure whole Raspberry Pi for Anticarium system, you should go to [Anticarium Pi repo](https://github.com/Anticarium/Anticarium_Pi) that will also configure WEB server.
+Steps to set up Anticarium WEB server:
+- `wget https://raw.githubusercontent.com/Anticarium/Anticarium_Web/main/setup_web.sh`
+- `chmod +x setup_web.sh`
+- `./setup_web.sh`
 
-1. `$ cd ~`
-2. `$ sudo apt update`
-3. `$ sudo apt install apache2`
-4. `$ sudo apt-get install libapache2-mod-wsgi-py3 python-dev`
-5. `$ pip3 install flask`
-6. `$ mkdir ~/Desktop/Anticarium_Web`
-7. Git pull this directory to `~/Desktop/Anticarium_Web`
-8. `$ cd ~/Desktop/Anticarium_Web/Anticarium_Web`
-9. In `anticarium_web.wsgi` put your absolute path to Anticarium_Web local repo
-10. In `anticarium_web.py` put your absolute path to Anticarium_Web local repo where needed
-11. Adjust `anticarium_web.conf.example`, by adding ip and paths
-12. Rename `anticarium_web.conf.example` to `anticarium_web.conf`
-13. `$ sudo mv ./anticarium_web.conf /etc/apache2/sites-available`
-14. `$ sudo a2ensite /etc/apache2/sites-available/anticarium_web.conf`
-15. `$ sudo service apache2 reload`
+The server will be set up, however it is recommended to reboot so new environment variables could be sourced:
+- `sudo reboot now`
 
-## Useful commands
+## Useful commands for development
 
 - `$ sudo service apache2 reload` - reloads apache2 service
 
