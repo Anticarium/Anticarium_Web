@@ -4,7 +4,7 @@
      # Give an alias to to start your website url with
      WSGIScriptAlias / ${ANTICARIUM_WEB_PATH}/anticarium_web.wsgi
      <Directory ${ANTICARIUM_WEB_PATH}>
-                # set permissions as per apache2.conf file
+            # set permissions as per apache2.conf file
             Options FollowSymLinks
             AllowOverride None
             Require all granted
