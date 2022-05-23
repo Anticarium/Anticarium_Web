@@ -1,9 +1,26 @@
 #!/bin/bash
 set -e
 
+while getopts a:h flag
+do
+    case "${flag}" in
+        a) ANTICARIUM_SERVER_IP=${OPTARG};;
+        h) echo "Anticarium WEB first time setup script for Raspberry Pi
+  Arguments:
+  -a        public ip address of Raspberry Pi's router for WEB server"; 
+            exit 0;;
+    esac
+done
+
+if [ -z "$ANTICARIUM_SERVER_IP" ]
+then
+    >&2 echo "Error: ANTICARIUM_SERVER_IP environment variable not set! Use -a flag to pass and set it!"
+    exit -1
+fi
+
 echo -e "Setting up Anticarium WEB...\n\n"
 
-EXPORT_COMMAND="export ANTICARIUM_WEB_PATH=/home/pi/Anticarium_Web"
+EXPORT_COMMAND="export ANTICARIUM_WEB_PATH=$HOME/Anticarium_Web"
 echo $EXPORT_COMMAND >> .profile
 sudo sh -c "echo $EXPORT_COMMAND >> /etc/apache2/envvars"
 
