@@ -68,6 +68,7 @@ echo -e "git successfully installed\n\n"
 #-----------------------------------------------------------------
 echo "Cloning Anticarium_Web..."
 git clone https://github.com/Anticarium/Anticarium_Web.git
+chmod 777 Anticarium_Web
 echo -e "Anticarium_Web successfully cloned\n\n"
 
 #-----------------------------------------------------------------
@@ -80,6 +81,7 @@ set -e
 if [ $DATABASE_FOUND != 0 ]
 then
     ./sqlite.py
+    chmod 777 anticarium.db
 fi
 mv json_files.example json_files
 chmod -R 777 json_files
@@ -88,6 +90,8 @@ sudo mv ./anticarium_web.conf /etc/apache2/sites-available
 sudo mv ./apache2.conf.example /etc/apache2/apache2.conf
 cd /etc/apache2/sites-available
 sudo a2ensite anticarium_web.conf
+sudo a2dismod mpm_event
+sudo a2enmod mpm_prefork
 sudo service apache2 reload
 cd $HOME
 echo -e "Configured apache2\n\n"

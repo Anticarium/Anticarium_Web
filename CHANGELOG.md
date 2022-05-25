@@ -1,5 +1,9 @@
 # Anticarium_Web
 
+- MODIY: Fixed database and various other permission errors in local Anticarium_Web dist using `setup_web.sh`
+- REMOVE: Removed VERSION file as it is not used
+- MODIFY: Fixed apache2 multiple threads issue with `setup_web.sh`
+
 # 1.0.0
 - ADD: First time setup script for Raspberry Pi to automatically configure WEB server
 - MODIFY: Python scripts in this repo now use ANTICARIUM_WEB_PATH environment variable to access this repo
