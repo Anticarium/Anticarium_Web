@@ -58,14 +58,46 @@ def saveRegime():
         
         database.editRegimeAt(requestJson, index)
 
-    return ('', 204) 
+    data = jsonify()
+    data.headers[ANTICARIUM_HEADER] = "Regime_saved" 
+    return data
+
+
+@app.route("/request/regime")
+def returnRegime():
+    index = regimeIdJson.id
+    global controlJson
+
+    # Is custom regime active?
+    data = None
+    if index == -1:
+        # Yes: Create fake regime with current control value
+        customRegimeId = models.RegimeId(-1)
+        customRegimeValue = models.RegimeValue(controlJson.regimeValue.moisture, controlJson.regimeValue.temperature)
+        customRegime = models.Regime('', customRegimeId, customRegimeValue)
+        data = jsonify(models.fromRegime(customRegime))
+    else:
+        # No: Send current regime
+        data = jsonify(models.fromRegime(savedRegimesJson.savedRegimes[index]))
+        controlJson.regimeValue = savedRegimesJson.savedRegimes[index].regimeValue
+        saveJson(CONTROL_JSON_PATH, models.fromControl(controlJson))
+
+    data.headers[ANTICARIUM_HEADER] = "Regime"
+    
+    return data 
 
 @app.route("/send/regime_id", methods=["POST"])
 def saveRegimeId():
     regimeId = models.toRegimeId(request.get_json()).id
 
     global regimeIdJson
+    global savedRegimesJson
+    global controlJson
+    
+    deleteRequested = False
     if regimeId >= 100: # If deletion was requested
+        deleteRequested = True
+
         regimeId = regimeId - 100
         global savedRegimesJson
         savedRegimesJson.savedRegimes.pop(regimeId)
@@ -85,9 +117,16 @@ def saveRegimeId():
             savedRegimesJson.savedRegimes[i].regimeId.id = i
     else:
         regimeIdJson.id = regimeId
-    
+        controlJson.regimeValue = savedRegimesJson.savedRegimes[regimeId].regimeValue
+
     saveJson(REGIME_ID_JSON_PATH, models.fromRegimeId(regimeIdJson))
-    return ('', 204)
+    
+    if deleteRequested:
+        data = jsonify()
+        data.headers[ANTICARIUM_HEADER] = "Regime_deleted"
+        return data
+    else:
+        return returnRegime()
 
 @app.route("/send/control", methods=["POST"])
 def saveControlData():
@@ -140,30 +179,7 @@ def returnControl():
 def returnRegimes():
     returnValue = jsonify(models.fromRegimes(regimesJson))    
     returnValue.headers[ANTICARIUM_HEADER] = "Regimes" 
-    return returnValue
-
-@app.route("/request/regime")
-def returnRegime():
-    index = regimeIdJson.id
-    global controlJson
-
-    # Is custom regime active?
-    data = None
-    if index == -1:
-        # Yes: Create fake regime with current control value
-        customRegimeId = models.RegimeId(-1)
-        customRegimeValue = models.RegimeValue(controlJson.regimeValue.moisture, controlJson.regimeValue.temperature)
-        customRegime = models.Regime('', customRegimeId, customRegimeValue)
-        data = jsonify(models.fromRegime(customRegime))
-    else:
-        # No: Send current regime
-        data = jsonify(models.fromRegime(savedRegimesJson.savedRegimes[index]))
-        controlJson.regimeValue = savedRegimesJson.savedRegimes[index].regimeValue
-        saveJson(CONTROL_JSON_PATH, models.fromControl(controlJson))
-
-    data.headers[ANTICARIUM_HEADER] = "Regime"
-    
-    return data        
+    return returnValue       
 
 @app.route("/request/saved_regimes")
 def returnSavedRegimes():    

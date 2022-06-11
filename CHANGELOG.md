@@ -1,7 +1,11 @@
 # Anticarium_Web
 
+- MODIFY: Return empty data with `Regime_deleted` in `Anticarium_content_description` header on `/send/regime_id` if deletion was requested
+- MODIFY: Return Regime on `/send/regime_id` if deletion was not requested
+- MODIFY: Return empty data with `Regime_saved` in `Anticarium_content_description` header on `/send/regime`
+
 # 1.0.1
-- MODIY: Fixed database and various other permission errors in local Anticarium_Web dist using `setup_web.sh`
+- MODIFY: Fixed database and various other permission errors in local Anticarium_Web dist using `setup_web.sh`
 - REMOVE: Removed VERSION file as it is not used
 - MODIFY: Fixed apache2 multiple threads issue with `setup_web.sh`
 
